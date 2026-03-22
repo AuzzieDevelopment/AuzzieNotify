@@ -93,21 +93,3 @@ RegisterNUICallback('nuiReady', function(_, cb)
     isReady = true
     cb('ok')
 end)
-
-
-Citizen.CreateThread(function()
-
-    while true do
-        Citizen.Wait(0)
-        if IsControlJustReleased(0, 288) then -- F1 key
-            sendNotify('success', 'This is a success notification!', 'top-right')
-            sendNotify('error', 'This is an error notification!', 'top-left')
-            sendNotify('warning', 'This is a warning notification!', 'bottom-left')
-            sendNotify('info', 'This is an info notification!', 'bottom-right')
-            sendNotify('success', 'This is a success notification!', 'bottom')
-            sendNotify('error', 'This is an error notification!', 'top')
-            sendNotify('warning', 'This is a warning notification!', 'left')
-            sendNotify('info', 'This is an info notification!', 'right')
-        end
-    end
-end)
