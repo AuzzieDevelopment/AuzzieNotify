@@ -1,4 +1,3 @@
-/* ─── Reset ──────────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -10,10 +9,8 @@ body {
   font-family: 'Orbitron', 'Rajdhani', monospace;
 }
 
-/* ─── Google Font (Orbitron) ─────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 
-/* ─── Animations ─────────────────────────────────────────────────────────────── */
 @keyframes notifyIn {
   from { opacity: 0; transform: var(--slide-from, translateY(-18px)) scale(0.93); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -29,17 +26,14 @@ body {
   to   { transform: scaleX(0); }
 }
 
-/* ─── Per-position containers (created dynamically by notify.js) ─────────────── */
 .notify-container {
   position: fixed;
   display: flex;
-  /* flex-direction and align-items set per-zone by JS based on position */
   gap: 8px;
   z-index: 9999;
   pointer-events: none;
 }
 
-/* ─── Toast ──────────────────────────────────────────────────────────────────── */
 .notify-toast {
   position: relative;
   display: flex;
@@ -67,7 +61,6 @@ body {
   pointer-events: none;
 }
 
-/* ─── Scanline overlay ───────────────────────────────────────────────────────── */
 .notify-scanline {
   position: absolute;
   inset: 0;
@@ -82,7 +75,6 @@ body {
   border-radius: inherit;
 }
 
-/* ─── Icon ───────────────────────────────────────────────────────────────────── */
 .notify-icon {
   font-size: 15px;
   flex-shrink: 0;
@@ -93,7 +85,6 @@ body {
   text-align: center;
 }
 
-/* ─── Message ────────────────────────────────────────────────────────────────── */
 .notify-message {
   font-family: 'Orbitron', monospace;
   font-size: 10px;
@@ -104,16 +95,33 @@ body {
   line-height: 1.55;
 }
 
-/* ─── Progress bar ───────────────────────────────────────────────────────────── */
 .notify-progress {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent-color, #00f5ff);
-  opacity: 0.5;
-  transform-origin: left center;
-  border-radius: 0 0 8px 8px;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  --pct: 100%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+  background: conic-gradient(
+    var(--accent-color, #00f5ff) var(--pct),
+    transparent var(--pct)
+  );
+  opacity: 0.6;
   animation: progressBar var(--duration, 5s) linear forwards;
+}
+
+@keyframes progressBar {
+  from { --pct: 100%; }
+  to   { --pct: 0%;   }
+}
+
+@property --pct {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 100%;
 }
